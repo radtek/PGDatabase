@@ -3,3 +3,9 @@
 ################################################################################
 
 /PGDatabase/.vs
+/PGDatabase/NuGet.PGDatabases
+/PGDatabase/NuGet.DBCodeHelper
+/PGDatabase/packages
+/PGDatabase/PGRelease
+/PGDatabase/PGDataBase/obj
+/PGDatabase/PGDataBase/bin

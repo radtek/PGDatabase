@@ -1,0 +1,207 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE80" #>
+<#@ assembly name="VSLangProj" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+#pragma warning disable CS0108
+
+<#= GetOutput() #>
+
+<#+
+
+    #region DTE
+
+    private string GetOutput() {
+        try {
+            // get project from DTE.
+            var currentProject = GetCurrentProject();
+
+            // load reference from current project.( try to load PGDatabase.dll )
+            var vsProject = currentProject.Object as VSLangProj.VSProject;
+            var PGDatabase_reference = vsProject.References.Cast<VSLangProj.Reference>().FirstOrDefault( item => item.Name == "PGDatabase" );
+            if ( PGDatabase_reference == null ) throw new Exception( "can't not found PGDatabase.dll, please reference dll to project." );
+
+            // load IDatabaseTable type from PGDatabase.dll asembly.
+            var assembly = System.Reflection.Assembly.LoadFile( PGDatabase_reference.Path );
+            var targetType = assembly.GetType( "PGLibrary.Database.IDatabaseTable" );
+            if ( targetType == null ) throw new Exception( "can't not found IDatabaseTable type in PGDatabase.dll, please reference current version dll to project." );
+            
+            // get all type that implement IDatabaseTable in this project.
+            var codeClasses = RetrieveProjectItems( currentProject?.ProjectItems )
+                .Where( item => item.FileCodeModel != null )
+                .SelectMany( item => RetrieveCodeClass( item.FileCodeModel.CodeElements ) )
+                .Where( item => IsImplemented( item, targetType ) );
+
+            // generate DB class.
+            return GenerateDBHelperCode( codeClasses );
+        } catch ( Exception ex ) {
+            return "/*" + ex.ToString() + "*/";
+        } finally {
+        } // try-catch-finally
+    } // private string GetOutput()
+
+
+    private Project GetCurrentProject() {
+        // Get the DTE service from the host
+        var serviceProvider = Host as IServiceProvider;
+        var dte = (EnvDTE.DTE)serviceProvider?.GetService(typeof(EnvDTE.DTE));
+
+        // Fail if we couldn't get the DTE. This can happen when trying to run in TextTransform.exe
+        if ( dte == null )
+            throw new Exception("T4MVC can only execute through the Visual Studio host");
+
+        var ttFileItem = dte.Solution.FindProjectItem(Host.TemplateFile);
+        var project = ttFileItem?.ContainingProject;
+
+        if ( project == null )
+            throw new Exception("Could not find the VS Project containing the T4 file.");
+
+        return project;
+    } // private Project GetCurrentProject()
+
+
+    private IEnumerable<ProjectItem> RetrieveProjectItems( ProjectItems projectItems ) {
+        if ( projectItems == null ) 
+            yield break;
+
+        foreach ( ProjectItem projectItem in projectItems ) {
+            yield return projectItem;
+                
+            if ( projectItem.ProjectItems.Count != 0 )
+                foreach ( var subProjectItem in RetrieveProjectItems( projectItem.ProjectItems ) )
+                    yield return subProjectItem;
+        } // foreach
+            
+    } // private IEnumerable<ProjectItem> RetrieveProjectItems( ProjectItems projectItems )
+        
+
+    private IEnumerable<CodeClass> RetrieveCodeClass( CodeElements CodeElements ) {
+        if ( CodeElements == null ) 
+            yield break;
+
+        foreach ( var codeElement in CodeElements ) {
+            if ( codeElement is CodeNamespace )
+                foreach ( var subElement in RetrieveCodeClass( ((CodeNamespace)codeElement).Members ) )
+                    yield return subElement;
+
+            if ( codeElement is CodeClass ) {
+                yield return (CodeClass)codeElement;
+
+                foreach ( var subElement in RetrieveCodeClass( ((CodeClass)codeElement).Members ) )
+                    yield return subElement;
+            } // if
+        } // foreach
+            
+    } // private IEnumerable<CodeClass> RetrieveCodeClass( CodeElements CodeElements )
+        
+
+    private bool IsImplemented( CodeClass CodeClass, Type checkType ) {
+
+        foreach ( CodeInterface interfaceCodeElement in CodeClass.ImplementedInterfaces ) {
+            if ( interfaceCodeElement.FullName == checkType.FullName )
+                return true;
+        } // foreach
+
+        return false;
+    } // private bool IsImplemented( CodeClass CodeClass, Type checkType )
+
+
+    private string GenerateDBHelperCode( IEnumerable<CodeClass> IDatabaseExtensionCodeClasses ) {
+        var result = new StringBuilder()
+            .AppendLine( "using System.Linq;" )
+            .AppendLine( "using PGLibrary.Database;" )
+            .AppendLine();
+
+        foreach ( var codeClass in IDatabaseExtensionCodeClasses.OrderBy( item => item.FullName ) ) {
+            GenerateDBHelperCode_Namespace( result, codeClass );
+            result.AppendLine();
+        } // foreach
+
+        return result.ToString();
+    } // private string GenerateDBHelperCode( IEnumerable<CodeClass> IDatabaseExtensionCodeClasses )
+
+
+    private void GenerateDBHelperCode_Namespace( StringBuilder result, CodeClass codeClass, int indentCount = 0 ) {
+        result.Append( ' ', indentCount )
+            .AppendLine( $"namespace {codeClass.Namespace.FullName} {{" );
+
+        GenerateDBHelperCode_Class( result, codeClass, indentCount + 4 );
+
+        result.Append( ' ', indentCount )
+            .AppendLine( "}" );
+    } // private void GenerateDBHelperCode_Namespace( StringBuilder result, CodeClass codeClass, int indentCount = 0 )
+
+
+    private void GenerateDBHelperCode_Class( StringBuilder result, CodeClass codeClass, int indentCount = 0 ) {
+        /// add DB class declare
+        result
+            .Append( ' ', indentCount )
+            .AppendLine( $"internal static partial class DB {{" );
+
+        /// add nested class declare            
+        // get nested class name
+        var classNames = new List<string>();
+            
+        for ( CodeElement classNode = codeClass as CodeElement ; classNode is CodeClass ; classNode = ((CodeClass)classNode).Parent as CodeElement )
+            classNames.Insert( 0, classNode.Name );
+
+        // add class declare
+        for ( int i = 0 ; i < classNames.Count - 1 ; i++ ) {
+            result.Append( ' ', indentCount + 4 + i * 4 );
+            result.AppendLine( $"public static partial class {classNames[i]} {{" );
+        } // for
+
+        /// add target class's instance
+        int targetIndentCount = indentCount + 4 * classNames.Count;
+        result.Append( ' ', targetIndentCount );
+        result.AppendLine( $"public static _{codeClass.Name} {codeClass.Name} = new _{codeClass.Name}( IDatabaseTableExtension.Table<{codeClass.FullName}>() );" );
+
+        /// add target class
+        result.Append( ' ', targetIndentCount );
+        result.AppendLine( $"public partial class _{codeClass.Name} : DBTable {{" );
+                
+        /// add target class's constructor
+        result.Append( ' ', targetIndentCount + 4 );
+        result.AppendLine( $"public _{codeClass.Name}( DBTable DBTable ) : base ( DBTable ) {{}}" );
+            
+        /// add members declare
+        GenerateDBHelperCode_Members( result, codeClass, targetIndentCount + 4 );
+            
+        /// add class end bracket
+        for ( int i = classNames.Count - 1 ; i >= 0 ; i-- ) {
+            result.Append( ' ', indentCount + 4 + i * 4 );
+            result.AppendLine( $"}}" );
+        } // for
+            
+        /// add DB class end bracket
+        result
+            .Append( ' ', indentCount )
+            .AppendLine( $"}}" );
+
+    } // private void GenerateDBHelperCode_Class( StringBuilder result, CodeClass codeClass, int indentCount = 0 )
+
+
+    private void GenerateDBHelperCode_Members( StringBuilder result, CodeClass codeClass, int indentCount = 0 ) {
+        foreach ( var member in codeClass.Members ) {
+            if ( member is CodeProperty ) {
+                var item = member as CodeProperty;
+                result.Append( ' ', indentCount )
+                    .AppendLine( $"public DBColumn {item.Name} = IDatabaseTableExtension.Columns<{codeClass.FullName}>( \"{item.Name}\" ).FirstOrDefault();" );
+            } // if
+            else if ( member is CodeVariable ) {
+                var item = member as CodeVariable;
+                result.Append( ' ', indentCount )
+                    .AppendLine( $"public DBColumn {item.Name} = IDatabaseTableExtension.Columns<{codeClass.FullName}>( \"{item.Name}\" ).FirstOrDefault();" );
+            } // else if
+        } // foreach
+    } // private void GenerateDBHelperCode_Members( StringBuilder result, CodeClass codeClass, int indentCount = 0 )
+
+
+    #endregion
+
+ #>

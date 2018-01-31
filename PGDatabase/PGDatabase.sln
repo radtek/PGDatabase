@@ -1,0 +1,120 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGDatabase", "PGDataBase\PGDatabase.csproj", "{874BB49B-2284-477F-A2FA-7C99B3313483}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.PGDatabase", "NuGet.PGDatabases\NuGet.PGDatabase.csproj", "{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.PGDBCodeHelper", "NuGet.DBCodeHelper\NuGet.PGDBCodeHelper.csproj", "{5A23B0F9-5ACD-4ABA-B556-592A996276E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Nuget.PGDatabase.Publish|Any CPU = Nuget.PGDatabase.Publish|Any CPU
+		Nuget.PGDatabase.Publish|x64 = Nuget.PGDatabase.Publish|x64
+		Nuget.PGDatabase.Publish|x86 = Nuget.PGDatabase.Publish|x86
+		Nuget.PGDBCodeHelper.Publish|Any CPU = Nuget.PGDBCodeHelper.Publish|Any CPU
+		Nuget.PGDBCodeHelper.Publish|x64 = Nuget.PGDBCodeHelper.Publish|x64
+		Nuget.PGDBCodeHelper.Publish|x86 = Nuget.PGDBCodeHelper.Publish|x86
+		Release net40|Any CPU = Release net40|Any CPU
+		Release net40|x64 = Release net40|x64
+		Release net40|x86 = Release net40|x86
+		Release net45|Any CPU = Release net45|Any CPU
+		Release net45|x64 = Release net45|x64
+		Release net45|x86 = Release net45|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Debug|x64.Build.0 = Debug|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Debug|x86.Build.0 = Debug|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDatabase.Publish|Any CPU.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDatabase.Publish|Any CPU.Build.0 = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDatabase.Publish|x64.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDatabase.Publish|x64.Build.0 = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDatabase.Publish|x86.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDatabase.Publish|x86.Build.0 = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDBCodeHelper.Publish|Any CPU.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDBCodeHelper.Publish|Any CPU.Build.0 = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDBCodeHelper.Publish|x64.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDBCodeHelper.Publish|x64.Build.0 = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDBCodeHelper.Publish|x86.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Nuget.PGDBCodeHelper.Publish|x86.Build.0 = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net40|Any CPU.ActiveCfg = Release net40|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net40|Any CPU.Build.0 = Release net40|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net40|x64.ActiveCfg = Release net40|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net40|x64.Build.0 = Release net40|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net40|x86.ActiveCfg = Release net40|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net40|x86.Build.0 = Release net40|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net45|Any CPU.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net45|Any CPU.Build.0 = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net45|x64.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net45|x64.Build.0 = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net45|x86.ActiveCfg = Release net45|Any CPU
+		{874BB49B-2284-477F-A2FA-7C99B3313483}.Release net45|x86.Build.0 = Release net45|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Debug|x64.Build.0 = Debug|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Debug|x86.Build.0 = Debug|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDatabase.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDatabase.Publish|Any CPU.Build.0 = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDatabase.Publish|x64.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDatabase.Publish|x64.Build.0 = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDatabase.Publish|x86.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDatabase.Publish|x86.Build.0 = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDBCodeHelper.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDBCodeHelper.Publish|x64.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDBCodeHelper.Publish|x64.Build.0 = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDBCodeHelper.Publish|x86.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Nuget.PGDBCodeHelper.Publish|x86.Build.0 = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net40|Any CPU.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net40|x64.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net40|x64.Build.0 = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net40|x86.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net40|x86.Build.0 = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net45|Any CPU.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net45|x64.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net45|x64.Build.0 = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net45|x86.ActiveCfg = Release|Any CPU
+		{B38B3A6B-01FF-4E4C-ACF5-9EF06B5B56E2}.Release net45|x86.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Debug|x86.Build.0 = Debug|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDatabase.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDatabase.Publish|x64.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDatabase.Publish|x64.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDatabase.Publish|x86.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDatabase.Publish|x86.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDBCodeHelper.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDBCodeHelper.Publish|Any CPU.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDBCodeHelper.Publish|x64.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDBCodeHelper.Publish|x64.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDBCodeHelper.Publish|x86.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Nuget.PGDBCodeHelper.Publish|x86.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net40|Any CPU.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net40|x64.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net40|x64.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net40|x86.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net40|x86.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net45|Any CPU.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net45|x64.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net45|x64.Build.0 = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net45|x86.ActiveCfg = Release|Any CPU
+		{5A23B0F9-5ACD-4ABA-B556-592A996276E0}.Release net45|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8506C158-D528-4B58-82A7-2DCF9434E927}
+	EndGlobalSection
+EndGlobal
