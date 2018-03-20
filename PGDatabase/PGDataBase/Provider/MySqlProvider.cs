@@ -146,7 +146,7 @@ namespace MayaFramework {
                 return "NULL";
 
             if ( value is string || value is char )
-                return $"'{value.CastTo<string>().Replace( "'", "''" )}'";
+                return $"'{value.ToString().Replace( "'", "''" )}'";
             
             else if ( value is Enum ) {
                 if ( ColumnRule.HasFlag( EColumnRule.EnumToString ) )

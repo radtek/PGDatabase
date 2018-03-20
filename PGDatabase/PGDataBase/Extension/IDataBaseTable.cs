@@ -60,7 +60,7 @@ namespace PGLibrary.Database {
                                 member.SetValue( target, valueObj );
 
                             // if value is Enum and target is string and has EColumnRule.EnumDescription, Convert it by description
-                            else if ( valueObj is string && ( member.Type.IsEnum || memberUnderlyingType.IsEnum )
+                            else if ( valueObj is string && ( member.Type.IsEnum || ( memberUnderlyingType?.IsEnum ?? false ) )
                                 && ( member.ColumnAttribute.ColumnRule.HasFlag( EColumnRule.EnumDescription )
                                     || member.ColumnAttribute.ColumnRule.HasFlag( EColumnRule.EnumDescriptionIgnoreCase ) ) ) {
 
@@ -70,13 +70,14 @@ namespace PGLibrary.Database {
                             } // else if
                             
                             // if value is Enum and target is string and has EColumnRule.EnumStringValue, Convert it by StringValue
-                            else if ( valueObj is string && ( member.Type.IsEnum || memberUnderlyingType.IsEnum )
+                            else if ( valueObj is string && ( member.Type.IsEnum || ( memberUnderlyingType?.IsEnum ?? false ) )
                                 && ( member.ColumnAttribute.ColumnRule.HasFlag( EColumnRule.EnumStringValue )
                                     || member.ColumnAttribute.ColumnRule.HasFlag( EColumnRule.EnumStringValueIgnoreCase ) ) ) {
 
                                 var ignoreCase = member.ColumnAttribute.ColumnRule.HasFlag( EColumnRule.EnumStringValueIgnoreCase );
+                                var enumStringValueKey = member.ColumnAttribute.EnumStringValueKey;
                                 var enumType = memberUnderlyingType ?? member.Type;
-                                member.SetValue( target, valueObj.ToString().ToEnumByStringValue( enumType, ignoreCase ) );
+                                member.SetValue( target, valueObj.ToString().ToEnumByStringValue( enumType, ignoreCase, enumStringValueKey ) );
                             } // else if
 
                             else { // try convert value to target type.
@@ -94,6 +95,9 @@ namespace PGLibrary.Database {
                                     member.SetValue( target, valueObj.ToType( member.Type, defaultValue ) );
                                 } // else
                             } // else
+                        } catch ( System.Reflection.TargetInvocationException ex ){
+                            result.Add( new Exception( $"Error Occur at ColumnName:{column.ColumnName}, MemberName:{member.Name}", ex.InnerException ) );
+                            continue;
                         } catch ( Exception ex ) {
                             if ( result == null ) result = new List<Exception>();
                             result.Add( new Exception( $"Error Occur at ColumnName:{column.ColumnName}, MemberName:{member.Name}", ex ) );

@@ -19,14 +19,14 @@ namespace PGLibrary.Database {
     [AttributeUsage( AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false )]
     public class DBColumnAttribute : Attribute {
 
-#region Static & Const
+        #region Static & Const
 
         /// <summary> Default attribute instance with null ColumnName. </summary>
         public static DBColumnAttribute Default = new DBColumnAttribute();
 
-#endregion
+        #endregion
 
-#region Property & Constructor
+        #region Property & Constructor
 
         /// <summary> Specific column name, if null, get the field's name to instead it. </summary>
         public string ColumnName { get; set; }
@@ -39,6 +39,9 @@ namespace PGLibrary.Database {
 
         /// <summary> determine this field has any ColumnRule or not. </summary>
         public EColumnRule ColumnRule { get; set; } = EColumnRule.None;
+
+        /// <summary> determine the key when convert string to enum of method EnumStringValue. </summary>
+        public string EnumStringValueKey { get; set; }
 
         /// <summary> Set the field to be a DB Column, to use extension in PGLibrary.Database. </summary>
         /// <param name="Name"> Specify column name, if null, use the field's name to instead it </param>
@@ -54,9 +57,9 @@ namespace PGLibrary.Database {
             this.ConvertType = ConvertType;
         } // public DBColumnAttribute( EConvertType ConvertType )
 
-#endregion
+        #endregion
 
-#region GetCorrespondMember
+        #region GetCorrespondMember
 
         private static Dictionary<Type, ReadOnlyDictionary<string, ReadOnlyCollection<_DBColumnAttribute_MemberInfo>>> sCorrespondMemberList = null;
 
@@ -197,7 +200,7 @@ namespace PGLibrary.Database {
                 sCorrespondMemberList.Remove( type );
         } // public static void ClearCache( params Type[] types )
 
-#endregion
+        #endregion
 
     } // public class DBColumnAttribute : Attribute
 
